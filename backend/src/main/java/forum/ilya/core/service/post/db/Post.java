@@ -24,6 +24,9 @@ public class Post {
     @JoinColumn(name = "user_id")
     private UserAccount userAccount;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "content")
     private String content;
 

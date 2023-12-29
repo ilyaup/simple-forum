@@ -1,51 +1,42 @@
 <template>
-  <div>
-    <HeaderView />
-    <MiddleView :posts="posts" :users="users" />
+  <div id="app">
+    <HeaderComponent />
+    <br>
+    <h1>Forum</h1>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import MiddleView from "./components/MiddleView.vue"
-import HeaderView from "./components/HeaderView.vue"
-import axios from "axios"
+import HeaderComponent from './components/HeaderComponent.vue';
+import { ref, provide } from "vue"
+// import axios from 'axios';
 
 export default {
   name: 'App',
   components: {
-    MiddleView,
-    HeaderView
+    HeaderComponent
   },
-  data: function () {
-    return {
-      user: null,
-      posts: [],
-      users: []
+  setup() {
+    // const jwt = localStorage.getItem("jwt")
+    // if (jwt) {
+    //   axios.get("http://localhost:8081/api/user/auth", {
+    //     params: {
+    //       jwt: this.jwt
+    //     }
+    //   })
+    //     .then(response => {
+    //       provide('logged_user', ref(response.data))
+    //     })
+    // } else {
+    //   provide('logged_user', ref(null))
+    // }
+    const local_logged_user = localStorage.getItem("logged_user")
+    if (local_logged_user) {
+      provide('logged_user', ref(JSON.parse(local_logged_user)))
+    } else {
+      provide('logged_user', ref(null))
     }
-  },
-  beforeMount() {
-    axios.get("http://localhost:8081/api/post/posts").then(response => {
-      this.posts = response.data;
-    });
-    axios.get("http://localhost:8081/api/user/users").then(response => {
-      this.users = response.data;
-    });
-  },
-  beforeCreate() {
-    this.$root.$on("onRegister", (login, password, email) =>
-      axios.post("http://localhost:8081/api/user/register", { login, password, email })
-        .then(response => alert(response.data)))
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

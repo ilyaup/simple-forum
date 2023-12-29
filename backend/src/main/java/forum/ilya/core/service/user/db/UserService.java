@@ -35,8 +35,17 @@ public class UserService {
     private UserResponse mapDaoToResponse(UserAccount userAccount) {
         return UserResponse.builder()
                 .login(userAccount.getLogin())
+                .id(userAccount.getId())
                 .email(userAccount.getEmail())
                 .rating(userAccount.getRating())
                 .build();
+    }
+
+    public long getUserIdByLoginAndPassword(String login, String password) {
+        return userRepository.getUserAccountByLoginAndPassword(login, password).orElseThrow().getId();
+    }
+
+    public UserResponse getUserById(long userId) {
+        return mapDaoToResponse(userRepository.getUserAccountById(userId).orElseThrow());
     }
 }

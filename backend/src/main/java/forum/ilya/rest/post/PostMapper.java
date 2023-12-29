@@ -9,6 +9,7 @@ public class PostMapper {
     public PostDto mapRequestToDto(PostRequest postRequest) {
         return PostDto.builder()
                 .userId(postRequest.userId())
+                .title(postRequest.title())
                 .content(postRequest.content())
                 .build();
     }

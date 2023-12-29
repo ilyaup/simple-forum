@@ -5,6 +5,7 @@ import lombok.Builder;
 @Builder
 public record PostRequest(
         long userId,
+        String title,
         String content
 ) {
 }

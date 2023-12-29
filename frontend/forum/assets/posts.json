@@ -1,0 +1,16 @@
+[
+    {
+        "postId": 0,
+        "author": "ilya",
+        "title": "Beautiful day",
+        "content": "Fishy text random text",
+        "likes": 0
+    },
+    {
+        "postId": 1,
+        "author": "nagibator",
+        "title": "What is better?",
+        "content": "Vue.js is better than React",
+        "likes": 11
+    }
+]

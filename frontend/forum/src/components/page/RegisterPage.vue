@@ -1,49 +1,44 @@
 <template>
-    <form @submit.prevent="onRegister">
-        <div class="field">
-            <div class="name">
-                <label for="login">Login</label>
-            </div>
-            <div class="value">
-                <input autofocus id="login" name="login" v-model="login" />
-            </div>
-        </div>
-        <div class="field">
-            <div class="name">
-                <label for="password">Password</label>
-            </div>
-            <div class="value">
-                <input id="password" name="password" type="password" v-model="password" />
-            </div>
-        </div>
-        <div class="field">
-            <div class="name">
-                <label for="email">Email</label>
-            </div>
-            <div class="value">
-                <input autofocus id="email" name="email" v-model="email" />
-            </div>
-        </div>
-        <div class="button-field">
-            <input type="submit" value="Register">
+    <h2>Register</h2>
+    <form>
+        <div class="third">
+            <input class="stack" type="login" placeholder="Login" v-model="creds.login" />
+            <input class="stack" type="text" placeholder="Email" v-model="creds.email" />
+            <input class="stack" type="password" placeholder="Password" v-model="creds.password" />
+            <button class="stack icon-paper-plane" v-on:click="register(creds.login, creds.password, creds.email)">
+                Register
+            </button>
         </div>
     </form>
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
-    name: 'RegisterPage',
-    data: function () {
+    data() {
         return {
-            login: "",
-            password: "",
-            email: ""
+            creds: {
+                login: "",
+                email: "",
+                password: ""
+            }
         }
     },
     methods: {
-        onRegister: function () {
-            this.$root.$emit("onRegister", this.login, this.password, this.email)
+        register(login, password, email) {
+            axios.post("http://localhost:8081/api/user/register", { login, password, email })
+                .then(response => alert(response.data))
         }
     }
 }
 </script>
+
+<style scoped>
+form {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
